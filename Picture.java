@@ -7,6 +7,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.imgscalr.Scalr;
 
@@ -14,8 +15,10 @@ public class Picture {
 
     private BufferedImage image;
     private File imageSource;
+    private String path;
 
-    public Picture(String path) {
+    public Picture(String newPath) {
+        path = newPath;
         imageSource = new File(path);
         try {
             image = ImageIO.read(imageSource);
@@ -30,6 +33,10 @@ public class Picture {
 
     public String getPath() {
         return imageSource.getAbsolutePath();
+    }
+
+    public void setPath(String newPath) {
+        path = newPath;
     }
 
     public BufferedImage getScaledImage() {
@@ -57,7 +64,7 @@ public class Picture {
             }
         } catch (ImageProcessingException e) {
             System.out.println("ERROR: " + e.getMessage());
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
         return metadataInfo;
