@@ -1,6 +1,7 @@
 package krawczyk.imageviewer;
 
 import java.awt.BorderLayout;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,27 +9,33 @@ import javax.swing.JLabel;
 public class IMAGE_VIEWER {
 
     public static void main(String[] args) {
-        /*String path = "/home/karol/Pobrane/IMG_20150828_160132.jpg";
+        String path = "/home/karol/Pobrane/IMG_20150828_160132.jpg";
         Picture test = new Picture(path);
-        String meta = "<html>" + test.getMetaData().replaceAll("\n", "<br>") + "<html>";
-        meta = meta.replaceAll("\\[.*?\\]", "");
+        //String meta = "<html>" + test.getMetaData().replaceAll("\n", "<br>") + "<html>";
+        //meta = meta.replaceAll("\\[.*?\\]", "");
+        String[] meta = test.getMetaData();
+        for (int i = 0; i < meta.length; i++) {
+            meta[i] = meta[i].replaceAll("\\[.*?\\]", "");
+            System.out.println(meta[i]);
+        }
 
-        JFrame frame = new JFrame();
-        frame.setSize(1000, 500);
-        JLabel label1 = new JLabel(new ImageIcon(test.getScaledImage()));
-        frame.add(label1, BorderLayout.WEST);
-        JLabel label2 = new JLabel(meta);
-        frame.add(label2, BorderLayout.EAST);
-        frame.setVisible(true);
-
-        System.out.println("Path: " + test.getPath());
-        System.out.println(test.getMetaData());*/
-
-        Gui gui = new Gui();
+        //JFrame frame = new JFrame();
+        //frame.setSize(1000, 500);
+        //JLabel label1 = new JLabel(new ImageIcon(test.getScaledImage()));
+        //frame.add(label1, BorderLayout.WEST);
+        //JLabel label2 = new JLabel(meta);
+        //frame.add(label2, BorderLayout.EAST);
+        //frame.setVisible(true);
+        //System.out.println("Path: " + test.getPath());
+        /*Gui gui = new Gui();
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setSize(1000, 700);
-        gui.setVisible(true);
-
+        gui.setVisible(true);*/
+ /*DirectoryContents test = new DirectoryContents("/home/karol/Pobrane");
+        String[] rest = test.getImagePaths();
+        for (int i = 0; i < rest.length; i++) {
+            System.out.println(rest[i]);
+        }*/
     }
 
 }

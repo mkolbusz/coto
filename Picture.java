@@ -47,14 +47,15 @@ public class Picture {
         return image = Scalr.resize(image, width, height);
     }
 
-    public String getMetaData() {
-        String metadataInfo = "";
+    public String[] getMetaData() {
+        String[] metadataInfo = new String[52];
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageSource);
-
+            int i = 0;
             for (Directory directory : metadata.getDirectories()) {
                 for (Tag tag : directory.getTags()) {
-                    metadataInfo = metadataInfo + "\n" + tag;
+                    metadataInfo[i] = tag.toString();
+                    i++;
                 }
                 if (directory.hasErrors()) {
                     for (String error : directory.getErrors()) {

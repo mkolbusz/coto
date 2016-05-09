@@ -28,19 +28,20 @@ public class DirectoryContents {
         };
     }
 
-    public Picture[] getPictures() {
-        if (dir.isDirectory()) {
-            int i = 0;
-            for (File f : dir.listFiles(imageFilter)) {
-                i++;
-            }
+    public String[] getImagePaths() {
+        int i = 0;
 
-            pictures = new Picture[i];
-            String[] picturesPath = new String[i];
-            i = 0;
-            for (File f : dir.listFiles(imageFilter)) {
-                picturesPath[i] = f.getAbsolutePath();
-            }
+        for (File f : dir.listFiles(imageFilter)) {
+            i++;
         }
+
+        String imagePath[] = new String[i];
+        i = 0;
+        for (File f : dir.listFiles(imageFilter)) {
+            imagePath[i] = f.getAbsolutePath();
+            i++;
+        }
+        return imagePath;
+
     }
 }
