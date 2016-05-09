@@ -9,7 +9,11 @@ import javax.swing.JLabel;
 public class IMAGE_VIEWER {
 
     public static void main(String[] args) {
-        String path = "/home/karol/Pobrane/IMG_20150828_160132.jpg";
+        Gui gui = new Gui();
+        gui.setSize(1366, 768);
+        gui.setVisible(true);
+
+        /*String path = "/home/karol/Pobrane/IMG_20150828_160132.jpg";
         Picture test = new Picture(path);
         //String meta = "<html>" + test.getMetaData().replaceAll("\n", "<br>") + "<html>";
         //meta = meta.replaceAll("\\[.*?\\]", "");
@@ -17,8 +21,7 @@ public class IMAGE_VIEWER {
         for (int i = 0; i < meta.length; i++) {
             meta[i] = meta[i].replaceAll("\\[.*?\\]", "");
             System.out.println(meta[i]);
-        }
-
+        }*/
         //JFrame frame = new JFrame();
         //frame.setSize(1000, 500);
         //JLabel label1 = new JLabel(new ImageIcon(test.getScaledImage()));
