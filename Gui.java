@@ -125,7 +125,7 @@ public class Gui extends javax.swing.JFrame {
             numberOfImages = path.length;
             if (numberOfImages != 0) {
                 picture = new Picture(path[0]);
-                pictureLabel.setIcon(new ImageIcon(picture.getScaledImage(965, 900)));
+                pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(800, 500)));
                 metaInfo = picture.getMetaData();
                 metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
                 textPane.setText(metaInfo);
