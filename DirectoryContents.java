@@ -29,14 +29,8 @@ public class DirectoryContents {
     }
 
     public String[] getImagePaths() {
+        String imagePath[] = new String[dir.listFiles(imageFilter).length];
         int i = 0;
-
-        for (File f : dir.listFiles(imageFilter)) {
-            i++;
-        }
-
-        String imagePath[] = new String[i];
-        i = 0;
         for (File f : dir.listFiles(imageFilter)) {
             imagePath[i] = f.getAbsolutePath();
             i++;

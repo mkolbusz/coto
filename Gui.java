@@ -1,6 +1,11 @@
 package krawczyk.imageviewer;
 
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.MetadataException;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -125,10 +130,14 @@ public class Gui extends javax.swing.JFrame {
             numberOfImages = path.length;
             if (numberOfImages != 0) {
                 picture = new Picture(path[0]);
-                pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(800, 500)));
+                //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
+                //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
+                //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
+                pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
                 metaInfo = picture.getMetaData();
                 metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
                 textPane.setText(metaInfo);
+                pictureLabel.setText("");
             } else {
                 pictureLabel.setText("No images in this folder.");
             }
@@ -147,7 +156,18 @@ public class Gui extends javax.swing.JFrame {
             actualImage--;
         }
         picture = new Picture(path[actualImage]);
-        pictureLabel.setIcon(new ImageIcon(picture.getScaledImage(965, 900)));
+        try {
+            //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
+            //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
+            //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
+            pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
+        } catch (ImageProcessingException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MetadataException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
         metaInfo = picture.getMetaData();
         metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
         textPane.setText(metaInfo);
@@ -161,46 +181,22 @@ public class Gui extends javax.swing.JFrame {
             actualImage++;
         }
         picture = new Picture(path[actualImage]);
-        pictureLabel.setIcon(new ImageIcon(picture.getScaledImage(965, 900)));
+        try {
+            //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
+            //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
+            //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
+            pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
+        } catch (ImageProcessingException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MetadataException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
         metaInfo = picture.getMetaData();
         metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
         textPane.setText(metaInfo);
     }//GEN-LAST:event_nextButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Gui().setVisible(true);
-            }
-        });
-    }
 
     @Override
     public void paint(Graphics g) {
