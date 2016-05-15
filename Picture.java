@@ -21,6 +21,7 @@ public class Picture {
     private BufferedImage image;
     private File imageSource;
     private String path;
+    private String metadataInfo;
 
     public Picture(String newPath) {
         path = newPath;
@@ -29,6 +30,27 @@ public class Picture {
             image = ImageIO.read(imageSource);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+
+        /*nie wiem czy tak moge zmienić to z tym wczytywaniem metadaty raz, może być zamiast nowej klasy
+         w konstruktorze to?*/
+        metadataInfo = "";
+        try {
+            Metadata metadata = ImageMetadataReader.readMetadata(imageSource);
+            for (Directory directory : metadata.getDirectories()) {
+                for (Tag tag : directory.getTags()) {
+                    metadataInfo = metadataInfo + tag.toString() + "\n";
+                }
+                if (directory.hasErrors()) {
+                    for (String error : directory.getErrors()) {
+                        System.err.println("ERROR: " + error);
+                    }
+                }
+            }
+        } catch (ImageProcessingException e) {
+            System.out.println("ERROR: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 
@@ -115,24 +137,6 @@ public class Picture {
         return Scalr.resize(destinationImage, inWidth, inHeight);
     }*/
     public String getMetaData() {
-        String metadataInfo = "";
-        try {
-            Metadata metadata = ImageMetadataReader.readMetadata(imageSource);
-            for (Directory directory : metadata.getDirectories()) {
-                for (Tag tag : directory.getTags()) {
-                    metadataInfo = metadataInfo + tag.toString() + "\n";
-                }
-                if (directory.hasErrors()) {
-                    for (String error : directory.getErrors()) {
-                        System.err.println("ERROR: " + error);
-                    }
-                }
-            }
-        } catch (ImageProcessingException e) {
-            System.out.println("ERROR: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("ERROR: " + e.getMessage());
-        }
         return metadataInfo;
     }
 }
