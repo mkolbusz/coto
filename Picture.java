@@ -32,6 +32,10 @@ public class Picture {
         }
     }
 
+    public File getFile() {
+        return imageSource;
+    }
+
     public BufferedImage getImage() {
         return image;
     }
@@ -52,7 +56,7 @@ public class Picture {
         return image = Scalr.resize(image, width, height);
     }
 
-    public BufferedImage getRotatedScaledImage(int inWidth, int inHeight) throws ImageProcessingException, IOException, MetadataException {
+    /*public BufferedImage getRotatedScaledImage(int inWidth, int inHeight) throws ImageProcessingException, IOException, MetadataException {
         Metadata metadata = ImageMetadataReader.readMetadata(imageSource);
         ExifIFD0Directory exifIFD0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
         JpegDirectory jpegDirectory = (JpegDirectory) metadata.getFirstDirectoryOfType(JpegDirectory.class);
@@ -109,8 +113,7 @@ public class Picture {
         BufferedImage destinationImage = new BufferedImage(image.getHeight(), image.getWidth(), image.getType());
         destinationImage = affineTransformOp.filter(image, destinationImage);
         return Scalr.resize(destinationImage, inWidth, inHeight);
-    }
-
+    }*/
     public String getMetaData() {
         String metadataInfo = "";
         try {

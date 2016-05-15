@@ -20,6 +20,7 @@ public class Gui extends javax.swing.JFrame {
     private int actualImage;
     private String[] path;
     private String metaInfo;
+    private Rotate rotatedImage;
 
     public Gui() {
         initComponents();
@@ -130,10 +131,8 @@ public class Gui extends javax.swing.JFrame {
             numberOfImages = path.length;
             if (numberOfImages != 0) {
                 picture = new Picture(path[0]);
-                //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
-                //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
-                //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
-                pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
+                rotatedImage = new Rotate(picture.getFile(), picture.getImage());
+                pictureLabel.setIcon(new ImageIcon(rotatedImage.getRotatedScaledImage(965, 722)));
                 metaInfo = picture.getMetaData();
                 metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
                 textPane.setText(metaInfo);
@@ -143,7 +142,7 @@ public class Gui extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            pictureLabel.setText("ERROR");
+            pictureLabel.setText(e.getMessage());
         }
 
     }//GEN-LAST:event_item1ActionPerformed
@@ -157,10 +156,8 @@ public class Gui extends javax.swing.JFrame {
         }
         picture = new Picture(path[actualImage]);
         try {
-            //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
-            //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
-            //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
-            pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
+            rotatedImage = new Rotate(picture.getFile(), picture.getImage());
+            pictureLabel.setIcon(new ImageIcon(rotatedImage.getRotatedScaledImage(965, 722)));
         } catch (ImageProcessingException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -182,10 +179,8 @@ public class Gui extends javax.swing.JFrame {
         }
         picture = new Picture(path[actualImage]);
         try {
-            //tutaj problem, getRotatedScaledImage zmienia orientacje, jeżeli jest zdjęcie
-            //pionowe, tak aby dobrze wyświetlało, i skaluje odpowiednio
-            //problem z tym że te zdjęcia poziome które dobrze się wyświetlały zmniejszają się dziwnie
-            pictureLabel.setIcon(new ImageIcon(picture.getRotatedScaledImage(965, 722)));
+            rotatedImage = new Rotate(picture.getFile(), picture.getImage());
+            pictureLabel.setIcon(new ImageIcon(rotatedImage.getRotatedScaledImage(965, 722)));
         } catch (ImageProcessingException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -197,12 +192,6 @@ public class Gui extends javax.swing.JFrame {
         metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
         textPane.setText(metaInfo);
     }//GEN-LAST:event_nextButtonActionPerformed
-
-    @Override
-    public void paint(Graphics g) {
-        System.out.println("Kolbusz");
-        super.paint(g); //To change body of generated methods, choose Tools | Templates.
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem item1;
