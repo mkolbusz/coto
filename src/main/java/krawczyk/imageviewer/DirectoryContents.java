@@ -10,11 +10,10 @@ public class DirectoryContents {
         "jpeg", "exif", "tiff", "bmp", "png", "ppm", "pgm", "pbm", "pnm", "webp",
         "hdr", "bpg", "img"};
     private FilenameFilter imageFilter;
-    private Picture[] pictures;
+    private String[] imagePaths;
 
     public DirectoryContents(String directory) {
         dir = new File(directory);
-
         imageFilter = new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -26,16 +25,19 @@ public class DirectoryContents {
                 return false;
             }
         };
+        setImagePaths();
+    }
+
+    private void setImagePaths() {
+        imagePaths = new String[dir.listFiles(imageFilter).length];
+        int i = 0;
+        for (File f : dir.listFiles(imageFilter)) {
+            imagePaths[i] = f.getAbsolutePath();
+            i++;
+        }
     }
 
     public String[] getImagePaths() {
-        String imagePath[] = new String[dir.listFiles(imageFilter).length];
-        int i = 0;
-        for (File f : dir.listFiles(imageFilter)) {
-            imagePath[i] = f.getAbsolutePath();
-            i++;
-        }
-        return imagePath;
-
+        return imagePaths;
     }
 }

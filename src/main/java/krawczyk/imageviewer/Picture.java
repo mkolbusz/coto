@@ -22,6 +22,7 @@ public class Picture {
     private File imageSource;
     private String path;
     private String metadataInfo;
+    private String[][] arrMetadataInfo;
 
     public Picture(String newPath) {
         path = newPath;
@@ -33,6 +34,7 @@ public class Picture {
         }
         metadataInfo = "";
         setMetadata();
+        setMetadataArray();
     }
 
     private void setMetadata() {
@@ -53,6 +55,23 @@ public class Picture {
         } catch (IOException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
+    }
+
+    private void setMetadataArray() {
+        String meta;
+        meta = metadataInfo.replaceAll("\\[.*?\\]", "");
+        String[] tempArr = meta.split(" - |\\\n");
+        arrMetadataInfo = new String[52][2];
+        int d = 0;
+        for (int i = 0; i < arrMetadataInfo.length; i++) {
+            arrMetadataInfo[i][0] = tempArr[d];
+            arrMetadataInfo[i][1] = tempArr[d + 1];
+            d = d + 2;
+        }
+    }
+
+    public String[][] getMetadataArray() {
+        return arrMetadataInfo;
     }
 
     public File getFile() {

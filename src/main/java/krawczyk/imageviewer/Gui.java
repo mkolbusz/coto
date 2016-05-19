@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 public class Gui extends javax.swing.JFrame {
 
@@ -21,10 +22,11 @@ public class Gui extends javax.swing.JFrame {
     private String[] path;
     private String metaInfo;
     private Rotate rotatedImage;
+    private DefaultTableModel model;
+    private final static String[] COLUMN_NAMES = new String[]{"Info", "Data"};
 
     public Gui() {
         initComponents();
-        textPane.setEditable(false);
     }
 
     /**
@@ -39,8 +41,8 @@ public class Gui extends javax.swing.JFrame {
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         pictureLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textPane = new javax.swing.JTextPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         item1 = new javax.swing.JMenuItem();
@@ -62,7 +64,7 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(textPane);
+        jScrollPane2.setViewportView(table);
 
         menu.setText("Options");
 
@@ -83,17 +85,18 @@ public class Gui extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addGap(84, 84, 84)
                         .addComponent(previousButton)
                         .addGap(38, 38, 38)
-                        .addComponent(nextButton)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(nextButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,7 +104,8 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(previousButton)
@@ -135,7 +139,13 @@ public class Gui extends javax.swing.JFrame {
                 pictureLabel.setIcon(new ImageIcon(rotatedImage.getRotatedScaledImage(965, 722)));
                 metaInfo = picture.getMetaData();
                 metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
-                textPane.setText(metaInfo);
+                model = new DefaultTableModel(picture.getMetadataArray(), COLUMN_NAMES) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                table.setModel(model);
                 pictureLabel.setText("");
             } else {
                 pictureLabel.setText("No images in this folder.");
@@ -167,7 +177,13 @@ public class Gui extends javax.swing.JFrame {
         }
         metaInfo = picture.getMetaData();
         metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
-        textPane.setText(metaInfo);
+        model = new DefaultTableModel(picture.getMetadataArray(), COLUMN_NAMES) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table.setModel(model);
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
@@ -190,17 +206,23 @@ public class Gui extends javax.swing.JFrame {
         }
         metaInfo = picture.getMetaData();
         metaInfo = metaInfo.replaceAll("\\[.*?\\]", "");
-        textPane.setText(metaInfo);
+        model = new DefaultTableModel(picture.getMetadataArray(), COLUMN_NAMES) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table.setModel(model);
     }//GEN-LAST:event_nextButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem item1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu menu;
     private javax.swing.JButton nextButton;
     private javax.swing.JLabel pictureLabel;
     private javax.swing.JButton previousButton;
-    private javax.swing.JTextPane textPane;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
